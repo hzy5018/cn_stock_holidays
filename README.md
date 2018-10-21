@@ -49,7 +49,7 @@ pip install cn-stock-holidays
 or
 
 ```
-pip install git+https://github.com/rainx/cn_stock_holidays.git
+pip install git+https://github.com/hzy5018/cn_stock_holidays.git
 ```
 
 ### 导入
