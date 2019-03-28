@@ -2,7 +2,7 @@ from datetime import time
 from cn_stock_holidays.data import get_cached
 from pandas import Timestamp, date_range, DatetimeIndex
 import pytz
-from zipline.utils.memoize import remember_last, lazyval
+from zipline.utils.memoize import lazyval
 import warnings
 
 from zipline.utils.calendars import TradingCalendar
@@ -139,7 +139,7 @@ class SHSZExchangeCalendar(TradingCalendar):
         return diff + 2
 
     @property
-    @remember_last
+    # @remember_last
     def all_minutes(self):
         """
             Returns a DatetimeIndex representing all the minutes in this calendar.
