@@ -6,7 +6,6 @@ from zipline.utils.memoize import remember_last, lazyval
 import warnings
 
 from zipline.utils.calendars import TradingCalendar
-# from zipline.utils.calendars.trading_calendar import days_at_time, NANOS_IN_MINUTE
 import numpy as np
 import pandas as pd
 
@@ -112,13 +111,20 @@ class SHSZExchangeCalendar(TradingCalendar):
     def tz(self):
         return pytz.timezone("Asia/Shanghai")
 
-    @property
-    def open_times(self):
-        return time(9, 31)
+    # @property
+    # def open_times(self):
+    #     return time(9, 31)
 
-    @property
-    def close_times(self):
-        return time(15, 0)
+    open_times = (
+        (None, time(9, 31)),
+    )
+    # @property
+    # def close_times(self):
+    #     return time(15, 0)
+
+    close_times = (
+        (None, time(15, 0)),
+    )
 
     @property
     def adhoc_holidays(self):

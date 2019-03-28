@@ -5,7 +5,7 @@ setup(
     version = "1.3",
     packages = find_packages(),
     install_requires=[
-        'requests'
+        'requests', 'zipline', 'pytz', 'pandas', 'numpy'
     ],
 
     # metadata for upload to PyPI
