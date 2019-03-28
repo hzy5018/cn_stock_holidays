@@ -10,7 +10,6 @@ from zipline.utils.calendars import TradingCalendar
 import numpy as np
 import pandas as pd
 
-
 NANOS_IN_MINUTE = 60000000000
 MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY = range(7)
 
@@ -55,6 +54,7 @@ def days_at_time(days, t, tz, day_offset=0):
     )
     return (days + delta).tz_localize(tz).tz_convert('UTC')
 
+
 # lunch break for shanghai and shenzhen exchange
 lunch_break_start = time(12, 30)
 lunch_break_end = time(14, 31)
@@ -62,6 +62,7 @@ lunch_break_end = time(14, 31)
 start_default = pd.Timestamp('2000-12-25', tz='UTC')
 end_base = pd.Timestamp('today', tz='UTC')
 end_default = end_base + pd.Timedelta(days=365)
+
 
 class HKExchangeCalendar(TradingCalendar):
     """
@@ -86,11 +87,12 @@ class HKExchangeCalendar(TradingCalendar):
             warnings.simplefilter('ignore')
             _all_days = date_range(start, end, freq=self.day, tz='UTC')
 
-        self._lunch_break_starts = days_at_time(_all_days, lunch_break_start, self.tz, 0)
-        self._lunch_break_ends = days_at_time(_all_days, lunch_break_end, self.tz, 0)
+        self._lunch_break_starts = days_at_time(_all_days, lunch_break_start,
+                                                self.tz, 0)
+        self._lunch_break_ends = days_at_time(_all_days, lunch_break_end,
+                                              self.tz, 0)
 
         TradingCalendar.__init__(self, start=start_default, end=end_default)
-
 
     @property
     def name(self):
@@ -101,17 +103,16 @@ class HKExchangeCalendar(TradingCalendar):
         return pytz.timezone("Asia/Shanghai")
 
     @property
-    def open_time(self):
+    def open_times(self):
         return time(10, 1)
 
     @property
-    def close_time(self):
+    def close_times(self):
         return time(16, 0)
 
     @property
     def adhoc_holidays(self):
-        return [Timestamp(t,tz=pytz.UTC) for t in get_cached(use_list=True)]
-
+        return [Timestamp(t, tz=pytz.UTC) for t in get_cached(use_list=True)]
 
     @property
     @remember_last
@@ -154,7 +155,7 @@ class HKExchangeCalendar(TradingCalendar):
             before_lunch_size_int = int(daily_before_lunch_sizes[day_idx])
             after_lunch_size_int = int(daily_after_lunch_sizes[day_idx])
 
-            #print("idx:{}, before_lunch_size_int: {}".format(idx, before_lunch_size_int))
+            # print("idx:{}, before_lunch_size_int: {}".format(idx, before_lunch_size_int))
             all_minutes[idx:(idx + before_lunch_size_int)] = \
                 np.arange(
                     opens_in_ns[day_idx],
