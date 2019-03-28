@@ -113,11 +113,11 @@ class SHSZExchangeCalendar(TradingCalendar):
         return pytz.timezone("Asia/Shanghai")
 
     @property
-    def open_time(self):
+    def open_times(self):
         return time(9, 31)
 
     @property
-    def close_time(self):
+    def close_times(self):
         return time(15, 0)
 
     @property
